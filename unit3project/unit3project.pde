@@ -1,44 +1,76 @@
 int randX;
+int randY;
+ArrayList<Integer> roadCords;
   
   void setup()
   {
+    roadCords = new ArrayList<Integer>();
     size(800, 600);
+    background(#60AD1A);
     random();
     noStroke();
+    while (randX <= height)
+    {
+      int randDist = int(random(100, 201));
+      road(randX, 0, true); 
+      roadCords.add(randX);
+      randX += randDist;
+    }
+    
+    while (randY <= width)
+    {
+      int randDist = int(random(30, 100));
+      road(0, randY, false); 
+      roadCords.add(randY);
+      randY += randDist;
+    }
+
   }
   
   void draw()
   {
-    background(50, 255, 0);
-    road(randX, 0);
+    
   }
   
   void random()
   {    
-    randX = int(random(1, 801));
-    road(randX, 0);
+    randX = int(random(1, 150));
+    randY = int(random(1, 100));
+    
   }
   
-  void road(int xCord, int yCord) 
+void road(int xCord, int yCord, boolean vertical) 
+{
+  if (vertical)
   {
-    while(yCord != 601)
+    for (int y = 0; y <= height; y++) 
     {
       fill(0); 
-      rect(xCord, yCord, 21, 1);
+      rect(xCord, y, 11, 1); 
       
       fill(255);
-      rect(xCord, yCord, 2, 1);
-      rect(xCord + 19, yCord, 2, 1);
-            
-      if(yCord % 4 == 0)
+      rect(xCord-2, yCord, 2, 1);
+      rect(xCord + 11, yCord, 2, 1);
+
+      if (y % 5 == 0)
       {
         fill(#FFF158); 
-        rect(xCord + 10, yCord, 1, 2);
-        
+        rect(xCord + 5, y, 1, 1); 
       }
-      
-      yCord ++;
     }
   }
-  
-  
+  else
+  {
+    for (int x = 0; x <= width; x++) 
+    {
+      fill(0); 
+      rect(x, yCord, 1, 11); 
+      
+      if (x % 5 == 0)
+      {
+        fill(#FFF158); 
+        rect(x, yCord + 5, 1, 1); 
+      }
+    }
+  }
+}
