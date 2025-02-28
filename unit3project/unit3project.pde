@@ -1,6 +1,8 @@
 int randX;
 int randY;
 ArrayList<String> roadCords;
+ArrayList<String> checkForRoad;
+color grass = (#60AD1A);
   
 void setup()
 {
@@ -12,7 +14,7 @@ void setup()
     
     while (randX <= width)
     {
-      int randDist = int(random(100, 201));
+      int randDist = int(random(100, 120));
       road(randX, 0, true); 
       
       randX += randDist;
@@ -20,10 +22,26 @@ void setup()
     
     while (randY <= height)
     {
-      int randDist = int(random(90, 150));
+      int randDist = int(random(70, 90));
       road(0, randY, false); 
       
       randY += randDist;
+    }
+    
+    for (int y = 0; y < height; y += 80)
+    {
+      for (int x = 0; x < width; x += 110)
+      {
+        color checkRoad = get(x, y);
+        if(checkRoad == grass)
+        {
+          drawHouse(x, y);
+        }
+        else 
+        {
+          x -= 109;
+        }
+      }
     }
 }
 
@@ -92,4 +110,39 @@ void road(int xCord, int yCord, boolean vertical)
       roadCords.add(x + "," + yCord);
     }
   }
+}
+
+void drawHouse(int houseX, int houseY) {
+  
+  
+    // Random elements
+    color roofColor = color(random(100, 255), random(50, 150), random(50, 150));
+    color wallColor = color(random(180, 220), random(120, 170), random(80, 130));
+    color doorColor = color(random(80, 130), random(40, 90), random(0, 50));
+    color windowColor = color(0, 150, 255);
+    int roofHeight = 10;
+    
+    fill(wallColor);
+    rect(houseX, houseY, 40, 40);
+    
+    fill(roofColor);
+    triangle(houseX, houseY, houseX + 40, houseY, houseX + 20, houseY - roofHeight);
+    
+    fill(doorColor);
+    rect(houseX + 25, houseY + 22, 10, 15);
+    fill(0);
+    ellipse(houseX + 27, houseY + 32, 3, 3); // door knob
+    
+    fill(windowColor);
+    rect(houseX + 5, houseY + 10, 10, 10);
+    rect(houseX + 25, houseY + 10, 10, 10);
+    
+    stroke(0);
+    line(houseX + 10, houseY + 10, houseX + 10, houseY + 20);
+    line(houseX + 5, houseY + 15, houseX + 15, houseY + 15);
+    line(houseX + 30, houseY + 10, houseX + 30, houseY + 20);
+    line(houseX + 25, houseY + 15, houseX + 35, houseY + 15);
+    
+    noStroke();
+  
 }
